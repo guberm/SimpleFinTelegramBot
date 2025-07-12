@@ -3,18 +3,49 @@
 > 🏦 **Complete Financial Integration Solution** - A full-stack C# ecosystem combining Telegram Bot, Web API, and WebApp for seamless banking data access through SimpleFIN integration.
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
-[![.NET](https://img.shields.io/badge/.NET-9.0-512BD4)]()
+[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)]()
 [![License](https://img.shields.io/badge/license-MIT-blue)]()
 [![Telegram](https://img.shields.io/badge/Telegram-Bot%20API-26A5E4)]()
 
 A comprehensive Telegram Bot + Web API solution for managing SimpleFIN financial accounts integration, built with C# and SQLite. This project enables users to securely connect their bank accounts and access financial information through both conversational bot commands and a modern web interface.
 
-## Project Structure
+## 🚀 Features
+
+### 🤖 Telegram Bot Commands
+- `/start` and `/help` - Show available commands and guidance
+- `/add` - Add a new bank connection via SimpleFIN token
+- `/accounts` and `/refresh` - List all connected banks and accounts with real-time data
+- `/remove` - Remove a bank connection securely
+- `/web` - Open the integrated WebApp interface
+
+### 🌐 Web API Endpoints
+- `GET /api/accounts?user_id={id}` - Retrieve banks for a specific user
+- CORS enabled for cross-origin requests
+- RESTful design with proper error handling
+
+### 📱 WebApp Frontend
+- Modern HTML5 interface integrated with Telegram WebApp API
+- Real-time account balance display
+- Direct link to SimpleFIN setup
+- Responsive design for mobile and desktop
+
+### ⚙️ Configuration System
+- **Secure Token Management**: Support for environment variables and configuration files
+- **Multi-Environment**: Separate configurations for development and production
+- **Validation**: Built-in token validation with helpful error messages
+- **Easy Setup**: Clear documentation and examples
+
+## 🏗️ Project Structure
 
 ```
 SimpleFinTelegram/
 ├─ SimpleFinBot/              # Telegram Bot (Console App)
-│  └─ Program.cs
+│  ├─ Program.cs              # Main bot logic
+│  ├─ appsettings.json        # Configuration file
+│  ├─ appsettings.Development.json
+│  ├─ Configuration/
+│  │   └─ BotSettings.cs      # Configuration models
+│  └─ BOT_CONFIGURATION.md    # Setup instructions
 ├─ SimpleFinWebApi/           # ASP.NET Core Web API (WebApp backend)
 │  ├─ Controllers/
 │  │   └─ AccountsController.cs
@@ -24,65 +55,70 @@ SimpleFinTelegram/
 └─ SimpleFinTelegram.sln
 ```
 
-## Features
-
-### Telegram Bot Commands
-- `/start` and `/help` - Show available commands
-- `/add` - Add a new bank connection via SimpleFIN token
-- `/accounts` and `/refresh` - List all connected banks and accounts
-- `/remove` - Remove a bank connection
-- `/web` - Open the WebApp interface
-
-### Web API
-- `GET /api/accounts?user_id={id}` - Retrieve banks for a specific user
-- CORS enabled for cross-origin requests
-
-### WebApp Frontend
-- HTML interface for displaying connected banks
-- Integration with Telegram WebApp API
-- Direct link to SimpleFIN setup
-
-## Setup Instructions
+## 🛠️ Setup Instructions
 
 ### Prerequisites
 - .NET 8 SDK
 - Telegram Bot Token (from @BotFather)
 
-### Installation
+### 1. Clone and Restore
+```bash
+git clone https://github.com/guberm/SimpleFinTelegramBot.git
+cd SimpleFinTelegramBot
+dotnet restore
+```
 
-1. **Clone and restore packages:**
-   ```bash
-   dotnet restore
-   ```
+### 2. Configure Bot Token
 
-2. **Configure Bot Token:**
-   - Edit `SimpleFinBot/Program.cs`
-   - Replace `"YOUR_TELEGRAM_BOT_TOKEN"` with your actual bot token
+#### Method 1: Configuration Files (Development)
+1. Edit `SimpleFinBot/appsettings.Development.json`
+2. Replace the bot token:
+```json
+{
+  "TelegramBot": {
+    "BotToken": "YOUR_ACTUAL_BOT_TOKEN_HERE"
+  }
+}
+```
 
-3. **Configure WebApp URL:**
-   - Edit `SimpleFinBot/Program.cs`
-   - Replace `"https://your-webapp-domain.com/index.html"` with your hosted WebApp URL
-   - Edit `SimpleFinWebApp/index.html`
-   - Replace `"http://localhost:5171"` with your API endpoint (if deploying to production)
+#### Method 2: Environment Variables (Production)
+```bash
+# Windows PowerShell
+$env:TELEGRAMBOT__BOTTOKEN="your_bot_token_here"
 
-### Running the Application
+# Linux/macOS
+export TELEGRAMBOT__BOTTOKEN="your_bot_token_here"
+```
+
+### 3. Getting a Bot Token
+1. Open Telegram and search for `@BotFather`
+2. Start a conversation and send `/newbot`
+3. Follow the instructions to create your bot
+4. Copy the bot token provided by BotFather
+
+For detailed configuration instructions, see [BOT_CONFIGURATION.md](SimpleFinBot/BOT_CONFIGURATION.md).
+
+## 🚀 Running the Application
+
+### Option 1: Using VS Code Tasks
+1. Open in VS Code
+2. Use `Ctrl+Shift+P` → "Tasks: Run Task"
+3. Select "Run Web API" and "Run Telegram Bot"
+
+### Option 2: Manual Commands
 
 1. **Start the Web API:**
    ```bash
-   dotnet run --project SimpleFinWebApi/SimpleFinWebApi.csproj
+   dotnet run --project SimpleFinWebApi
    ```
    The API will be available at `http://localhost:5171`
 
 2. **Start the Telegram Bot (in a new terminal):**
    ```bash
-   dotnet run --project SimpleFinBot/SimpleFinBot.csproj
+   dotnet run --project SimpleFinBot
    ```
 
-3. **Host the WebApp:**
-   - Deploy `SimpleFinWebApp/index.html` to your web server
-   - Update the URL in the bot configuration
-
-## Usage
+## 📋 Usage
 
 1. Start a chat with your Telegram bot
 2. Use `/add` to get SimpleFIN setup instructions
@@ -91,7 +127,7 @@ SimpleFinTelegram/
 5. Use `/accounts` to view your connected accounts
 6. Use `/web` to open the WebApp interface
 
-## Database
+## 💾 Database
 
 The application uses SQLite with the following schema:
 
@@ -105,24 +141,61 @@ accounts (
 )
 ```
 
-## Security Notes
+Database file: `simplefin_multi_accounts.db` (shared between Bot and API)
 
-- Store bot tokens securely (environment variables recommended)
-- Use HTTPS for production deployments
-- Validate all user inputs
-- Use parameterized database queries
-- Handle SimpleFIN credentials securely
+## 🔒 Security Features
 
-## Dependencies
+- ✅ Environment variable support for sensitive data
+- ✅ Token validation with helpful error messages  
+- ✅ Parameterized database queries
+- ✅ CORS configuration for API security
+- ✅ SimpleFIN credential encryption
+- ✅ Input validation and sanitization
+
+## 📦 Dependencies
 
 ### SimpleFinBot
-- Telegram.Bot
-- Microsoft.Data.Sqlite
+- `Telegram.Bot` (v19.0.0) - Telegram Bot API
+- `Microsoft.Data.Sqlite` (v8.0.11) - Database access
+- `Microsoft.Extensions.Configuration.*` - Configuration management
 
 ### SimpleFinWebApi
-- Microsoft.Data.Sqlite
-- ASP.NET Core
+- `Microsoft.Data.Sqlite` (v8.0.11) - Database access
+- `Microsoft.AspNetCore.OpenApi` (v8.0.11) - API documentation
 
-## License
+## 🧪 Development
+
+### Building
+```bash
+dotnet build
+```
+
+### Testing
+```bash
+dotnet test
+```
+
+### Clean Build
+```bash
+dotnet clean
+dotnet restore
+dotnet build
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Ensure all tests pass
+5. Submit a pull request
+
+## 📄 License
 
 This project is a template for SimpleFIN integration with Telegram bots.
+
+## 📞 Support
+
+- Check [BOT_CONFIGURATION.md](SimpleFinBot/BOT_CONFIGURATION.md) for setup issues
+- Review VS Code tasks for development workflow
+- Check GitHub Issues for known problems

@@ -4,12 +4,34 @@ using Telegram.Bot.Types.ReplyMarkups;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Exceptions;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Configuration;
+using SimpleFinBot.Configuration;
 using System.Text;
 using System.Text.Json;
 using System.Net.Http.Headers;
 
-string botToken = "YOUR_TELEGRAM_BOT_TOKEN"; // <-- YOUR TOKEN
-var botClient = new TelegramBotClient(botToken);
+// Build configuration
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(AppContext.BaseDirectory)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+    .AddEnvironmentVariables()
+    .Build();
+
+// Bind configuration to settings
+var settings = new BotSettings();
+configuration.Bind(settings);
+
+// Validate bot token
+if (string.IsNullOrEmpty(settings.TelegramBot.BotToken) || settings.TelegramBot.BotToken == "YOUR_TELEGRAM_BOT_TOKEN" || settings.TelegramBot.BotToken == "YOUR_DEVELOPMENT_BOT_TOKEN")
+{
+    Console.WriteLine("ERROR: Please configure a valid Telegram bot token in appsettings.json");
+    Console.WriteLine("You can get a bot token from @BotFather on Telegram");
+    Console.WriteLine("Update the 'TelegramBot:BotToken' value in appsettings.json or set the TELEGRAMBOT__BOTTOKEN environment variable");
+    return;
+}
+
+var botClient = new TelegramBotClient(settings.TelegramBot.BotToken);
 
 var builder = new SqliteConnectionStringBuilder { DataSource = "simplefin_multi_accounts.db" };
 using var connection = new SqliteConnection(builder.ConnectionString);
