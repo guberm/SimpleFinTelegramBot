@@ -1,0 +1,6 @@
+@SimpleFinWebApi_HostAddress = http://localhost:5171
+
+GET {{SimpleFinWebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

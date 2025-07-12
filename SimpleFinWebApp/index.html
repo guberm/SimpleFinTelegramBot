@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SimpleFIN WebApp</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <h2>My Banks</h2>
+  <div id="banks"></div>
+  <a href="https://bridge.simplefin.org/simplefin/create" target="_blank">Add new bank</a>
+  <script>
+    window.onload = function() {
+      const tg = window.Telegram.WebApp;
+      const user_id = tg.initDataUnsafe?.user?.id;
+      fetch("http://localhost:5171/api/accounts?user_id=" + user_id) // <-- updated port
+        .then(res => res.json())
+        .then(data => {
+          let html = "<ul>";
+          data.banks.forEach(b => {
+            html += `<li>${b.bank_name}</li>`;
+          });
+          html += "</ul>";
+          document.getElementById("banks").innerHTML = html;
+        });
+    };
+  </script>
+</body>
+</html>

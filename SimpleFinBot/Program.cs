@@ -1,0 +1,282 @@
+﻿using Telegram.Bot;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Exceptions;
+using Microsoft.Data.Sqlite;
+using System.Text;
+using System.Text.Json;
+using System.Net.Http.Headers;
+
+string botToken = "YOUR_TELEGRAM_BOT_TOKEN"; // <-- YOUR TOKEN
+var botClient = new TelegramBotClient(botToken);
+
+var builder = new SqliteConnectionStringBuilder { DataSource = "simplefin_multi_accounts.db" };
+using var connection = new SqliteConnection(builder.ConnectionString);
+connection.Open();
+
+var tableCmd = connection.CreateCommand();
+tableCmd.CommandText =
+    @"CREATE TABLE IF NOT EXISTS accounts (
+        user_id INTEGER,
+        access_url TEXT,
+        bank_name TEXT,
+        created_at TEXT,
+        PRIMARY KEY (user_id, access_url)
+    );";
+tableCmd.ExecuteNonQuery();
+
+botClient.StartReceiving(
+    async (botClient, update, cancellationToken) =>
+    {
+        if (update.Message is not { } message)
+            return;
+        if (message.Text is not { } messageText)
+            return;
+
+        var chatId = message.Chat.Id;
+        var userId = message.From?.Id ?? 0;
+
+        Console.WriteLine($"Received a '{messageText}' message in chat {chatId}.");
+
+        if (messageText.StartsWith("/start") || messageText.StartsWith("/help"))
+        {
+            await botClient.SendTextMessageAsync(
+                chatId: chatId,
+                text: "Welcome!\n\n" +
+                      "/add — Add a new bank\n" +
+                      "/accounts — List your banks and accounts\n" +
+                      "/remove — Remove a bank\n" +
+                      "/refresh — Refresh accounts\n" +
+                      "/web — Open WebApp\n" +
+                      "To add a bank, use /add.",
+                cancellationToken: cancellationToken);
+        }
+        else if (messageText.StartsWith("/add"))
+        {
+            await botClient.SendTextMessageAsync(
+                chatId: chatId,
+                text: "To add a bank, follow the link:\n" +
+                      "https://bridge.simplefin.org/simplefin/create\n" +
+                      "Copy the token and send it to me.",
+                cancellationToken: cancellationToken);
+        }
+        else if (messageText.StartsWith("/accounts") || messageText.StartsWith("/refresh"))
+        {
+            var banks = GetBanks(userId);
+            if (banks.Count == 0)
+            {
+                await botClient.SendTextMessageAsync(
+                    chatId: chatId,
+                    text: "You have no connected banks. Use /add to connect one.",
+                    cancellationToken: cancellationToken);
+                return;
+            }
+            var sb = new StringBuilder("Your connected banks:\n");
+            foreach (var bank in banks)
+            {
+                var data = await GetSimpleFinAccounts(bank.AccessUrl);
+                sb.AppendLine($"\n<b>{bank.BankName}</b>");
+                if (data != null && data.RootElement.TryGetProperty("accounts", out var accounts) && accounts.GetArrayLength() > 0)
+                {
+                    foreach (var acc in accounts.EnumerateArray())
+                    {
+                        var name = acc.GetProperty("name").GetString();
+                        var balance = acc.GetProperty("balance").GetString();
+                        var currency = acc.GetProperty("currency").GetString();
+                        var id = acc.GetProperty("id").GetString();
+                        sb.AppendLine($"    Account: <b>{name}</b> ({currency}), Balance: <b>{balance}</b>, ID: <code>{id}</code>");
+                    }
+                }
+                else
+                    sb.AppendLine("    Unable to retrieve data.");
+            }
+            await botClient.SendTextMessageAsync(
+                chatId: chatId,
+                text: sb.ToString(),
+                parseMode: ParseMode.Html,
+                cancellationToken: cancellationToken);
+        }
+        else if (messageText.StartsWith("/remove"))
+        {
+            var banks = GetBanks(userId);
+            if (banks.Count == 0)
+            {
+                await botClient.SendTextMessageAsync(
+                    chatId: chatId,
+                    text: "You have no connected banks.",
+                    cancellationToken: cancellationToken);
+                return;
+            }
+            var keyboard = new List<List<KeyboardButton>>();
+            for (int i = 0; i < banks.Count; i++)
+                keyboard.Add(new List<KeyboardButton> { new KeyboardButton($"{i + 1}. {banks[i].BankName}") });
+            await botClient.SendTextMessageAsync(
+                chatId: chatId,
+                text: "Select the bank to remove (send the number):",
+                replyMarkup: new ReplyKeyboardMarkup(keyboard) { OneTimeKeyboard = true, ResizeKeyboard = true },
+                cancellationToken: cancellationToken);
+        }
+        else if (messageText.StartsWith("/web"))
+        {
+            string webAppUrl = "https://your-webapp-domain.com/index.html"; // <-- REPLACE!
+            var markup = new InlineKeyboardMarkup(InlineKeyboardButton.WithWebApp("Open WebApp", new WebAppInfo { Url = webAppUrl }));
+            await botClient.SendTextMessageAsync(
+                chatId: chatId,
+                text: "Click the button to open your SimpleFIN dashboard:",
+                replyMarkup: markup,
+                cancellationToken: cancellationToken);
+        }
+        // Handle SimpleFIN token
+        else if (messageText.Length > 40 && messageText.Contains("="))
+        {
+            await botClient.SendTextMessageAsync(
+                chatId: chatId,
+                text: "Connecting...",
+                cancellationToken: cancellationToken);
+            var accessUrl = await ClaimAccessUrl(messageText);
+            if (string.IsNullOrEmpty(accessUrl))
+            {
+                await botClient.SendTextMessageAsync(
+                    chatId: chatId,
+                    text: "❌ Invalid or used token.",
+                    cancellationToken: cancellationToken);
+                return;
+            }
+            var data = await GetSimpleFinAccounts(accessUrl);
+            var bankName = GetBankNameFromData(data) ?? "Bank";
+            AddBank(userId, accessUrl, bankName);
+            await botClient.SendTextMessageAsync(
+                chatId: chatId,
+                text: $"✅ Bank '{bankName}' has been connected!",
+                cancellationToken: cancellationToken);
+        }
+        // Remove bank by number
+        else if (int.TryParse(messageText.Split('.')[0], out var idxForRemove))
+        {
+            var banks = GetBanks(userId);
+            if (banks.Count == 0 || idxForRemove < 1 || idxForRemove > banks.Count)
+            {
+                await botClient.SendTextMessageAsync(
+                    chatId: chatId,
+                    text: "Invalid number.",
+                    cancellationToken: cancellationToken);
+                return;
+            }
+            RemoveBank(userId, banks[idxForRemove - 1].AccessUrl);
+            await botClient.SendTextMessageAsync(
+                chatId: chatId,
+                text: "Bank connection removed.",
+                replyMarkup: new ReplyKeyboardRemove(),
+                cancellationToken: cancellationToken);
+        }
+    },
+    (botClient, exception, cancellationToken) =>
+    {
+        var ErrorMessage = exception switch
+        {
+            ApiRequestException apiRequestException
+                => $"Telegram API Error:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
+            _ => exception.ToString()
+        };
+
+        Console.WriteLine(ErrorMessage);
+        return Task.CompletedTask;
+    }
+);
+
+Console.WriteLine("Bot started. Press any key to exit.");
+Console.ReadKey();
+
+// --- DB and SimpleFIN helpers ---
+
+void AddBank(long userId, string accessUrl, string bankName)
+{
+    using var conn = new SqliteConnection(builder.ConnectionString);
+    conn.Open();
+    var cmd = conn.CreateCommand();
+    cmd.CommandText = @"INSERT OR REPLACE INTO accounts (user_id, access_url, bank_name, created_at) VALUES (@uid, @url, @bank, @dt)";
+    cmd.Parameters.AddWithValue("@uid", userId);
+    cmd.Parameters.AddWithValue("@url", accessUrl);
+    cmd.Parameters.AddWithValue("@bank", bankName);
+    cmd.Parameters.AddWithValue("@dt", DateTime.UtcNow.ToString("O"));
+    cmd.ExecuteNonQuery();
+}
+
+void RemoveBank(long userId, string accessUrl)
+{
+    using var conn = new SqliteConnection(builder.ConnectionString);
+    conn.Open();
+    var cmd = conn.CreateCommand();
+    cmd.CommandText = @"DELETE FROM accounts WHERE user_id=@uid AND access_url=@url";
+    cmd.Parameters.AddWithValue("@uid", userId);
+    cmd.Parameters.AddWithValue("@url", accessUrl);
+    cmd.ExecuteNonQuery();
+}
+
+List<(string AccessUrl, string BankName)> GetBanks(long userId)
+{
+    var result = new List<(string, string)>();
+    using var conn = new SqliteConnection(builder.ConnectionString);
+    conn.Open();
+    var cmd = conn.CreateCommand();
+    cmd.CommandText = @"SELECT access_url, bank_name FROM accounts WHERE user_id=@uid";
+    cmd.Parameters.AddWithValue("@uid", userId);
+    using var reader = cmd.ExecuteReader();
+    while (reader.Read())
+        result.Add((reader.GetString(0), reader.GetString(1)));
+    return result;
+}
+
+string? GetBankNameFromData(JsonDocument? data)
+{
+    if (data == null) return null;
+    try
+    {
+        var accs = data.RootElement.GetProperty("accounts");
+        if (accs.GetArrayLength() == 0) return null;
+        var org = accs[0].GetProperty("org");
+        if (org.TryGetProperty("domain", out var domain)) return domain.GetString();
+        if (org.TryGetProperty("name", out var name)) return name.GetString();
+        return null;
+    }
+    catch { return null; }
+}
+
+async Task<string?> ClaimAccessUrl(string setupToken)
+{
+    try
+    {
+        var base64 = Convert.FromBase64String(setupToken);
+        var url = Encoding.UTF8.GetString(base64);
+        using var http = new HttpClient();
+        var resp = await http.PostAsync(url, null);
+        if (resp.IsSuccessStatusCode)
+            return (await resp.Content.ReadAsStringAsync()).Trim();
+    }
+    catch { }
+    return null;
+}
+
+async Task<JsonDocument?> GetSimpleFinAccounts(string accessUrl)
+{
+    try
+    {
+        var uri = new Uri(accessUrl + "/accounts");
+        var userinfo = uri.UserInfo.Split(':');
+        var username = userinfo[0];
+        var password = userinfo[1];
+        var baseUri = $"{uri.Scheme}://{uri.Host}{(uri.IsDefaultPort ? "" : $":{uri.Port}")}{uri.AbsolutePath}/accounts";
+        using var http = new HttpClient();
+        var auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{username}:{password}"));
+        http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
+        var resp = await http.GetAsync(baseUri);
+        if (resp.IsSuccessStatusCode)
+        {
+            var json = await resp.Content.ReadAsStringAsync();
+            return JsonDocument.Parse(json);
+        }
+    }
+    catch { }
+    return null;
+}
