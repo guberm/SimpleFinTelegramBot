@@ -1,201 +1,174 @@
 # SimpleFIN Telegram Bot
 
-> 🏦 **Complete Financial Integration Solution** - A full-stack C# ecosystem combining Telegram Bot, Web API, and WebApp for seamless banking data access through SimpleFIN integration.
+> 🏦 **Complete Financial Integration Solution** - A comprehensive multi-language ecosystem with C# (.NET 8) and Python implementations for SimpleFIN banking integration through Telegram Bot, Web API, and WebApp interfaces.
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)]()
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB)]()
 [![License](https://img.shields.io/badge/license-MIT-blue)]()
 [![Telegram](https://img.shields.io/badge/Telegram-Bot%20API-26A5E4)]()
 
-A comprehensive Telegram Bot + Web API solution for managing SimpleFIN financial accounts integration, built with C# and SQLite. This project enables users to securely connect their bank accounts and access financial information through both conversational bot commands and a modern web interface.
+A dual-language implementation of SimpleFIN financial accounts integration with Telegram. Choose between C# (.NET 8) or Python implementations, both featuring secure configuration, real-time financial data access, and modern web interfaces.
 
-## 🚀 Features
+## 🚀 Available Implementations
+
+### 🔷 C# (.NET 8) Version
+- **Enterprise-grade** .NET 8 console application and ASP.NET Core API
+- **Advanced Configuration** with appsettings.json and environment variables
+- **VS Code Integration** with complete development environment
+- **GitHub Actions CI/CD** for automated building and testing
+
+📂 **Location**: [`/csharp`](./csharp/) | 📖 **Documentation**: [C# README](./csharp/README.md)
+
+### 🐍 Python Version  
+- **Modern async/await** Python implementation with FastAPI
+- **Type Safety** with full type hints and Pydantic models
+- **Auto-Documentation** with FastAPI's OpenAPI integration
+- **Flexible Deployment** options for containers and cloud platforms
+
+📂 **Location**: [`/python`](./python/) | 📖 **Documentation**: [Python README](./python/README.md)
+
+## 🎯 Choose Your Implementation
+
+| Feature | C# (.NET 8) | Python |
+|---------|-------------|---------|
+| **Performance** | ⭐⭐⭐⭐⭐ Compiled, very fast | ⭐⭐⭐⭐ Fast with async/await |
+| **Memory Usage** | ⭐⭐⭐⭐ Efficient | ⭐⭐⭐ Moderate |
+| **Development Speed** | ⭐⭐⭐ Structured, enterprise | ⭐⭐⭐⭐⭐ Rapid prototyping |
+| **Deployment** | ⭐⭐⭐⭐⭐ Single executable | ⭐⭐⭐ Runtime required |
+| **Documentation** | ⭐⭐⭐⭐ XML docs + IntelliSense | ⭐⭐⭐⭐⭐ Auto-generated API docs |
+| **Type Safety** | ⭐⭐⭐⭐⭐ Compile-time checking | ⭐⭐⭐⭐ Runtime with type hints |
+| **Ecosystem** | ⭐⭐⭐⭐ .NET ecosystem | ⭐⭐⭐⭐⭐ Vast Python libraries |
+
+## 🌟 Core Features (Both Implementations)
 
 ### 🤖 Telegram Bot Commands
-- `/start` and `/help` - Show available commands and guidance
-- `/add` - Add a new bank connection via SimpleFIN token
-- `/accounts` and `/refresh` - List all connected banks and accounts with real-time data
-- `/remove` - Remove a bank connection securely
-- `/web` - Open the integrated WebApp interface
+- `/start` and `/help` - Interactive command guidance
+- `/add` - Secure bank connection via SimpleFIN tokens
+- `/accounts` and `/refresh` - Real-time account data with balance information
+- `/remove` - Secure bank connection removal
+- `/web` - Launch integrated WebApp interface
 
-### 🌐 Web API Endpoints
-- `GET /api/accounts?user_id={id}` - Retrieve banks for a specific user
-- CORS enabled for cross-origin requests
-- RESTful design with proper error handling
+### 🌐 REST API Endpoints
+- `GET /api/accounts?user_id={id}` - Retrieve user's bank connections
+- **CORS enabled** for cross-origin requests
+- **Error handling** with structured responses
+- **Health checks** and monitoring endpoints
 
-### 📱 WebApp Frontend
-- Modern HTML5 interface integrated with Telegram WebApp API
-- Real-time account balance display
-- Direct link to SimpleFIN setup
-- Responsive design for mobile and desktop
+### 📱 Modern WebApp Interface
+- **Telegram WebApp API** integration with native theming
+- **Responsive design** for mobile and desktop
+- **Real-time data** synchronization with bot and API
+- **Enhanced UX** with loading states and error handling
 
-### ⚙️ Configuration System
-- **Secure Token Management**: Support for environment variables and configuration files
-- **Multi-Environment**: Separate configurations for development and production
-- **Validation**: Built-in token validation with helpful error messages
-- **Easy Setup**: Clear documentation and examples
+### ⚙️ Advanced Configuration
+- **Multi-environment** support (Development/Production)
+- **Environment variables** for secure production deployment
+- **Validation** with helpful error messages for developers
+- **Flexible settings** for different deployment scenarios
 
 ## 🏗️ Project Structure
 
 ```
-SimpleFinTelegram/
-├─ SimpleFinBot/              # Telegram Bot (Console App)
-│  ├─ Program.cs              # Main bot logic
-│  ├─ appsettings.json        # Configuration file
-│  ├─ appsettings.Development.json
-│  ├─ Configuration/
-│  │   └─ BotSettings.cs      # Configuration models
-│  └─ BOT_CONFIGURATION.md    # Setup instructions
-├─ SimpleFinWebApi/           # ASP.NET Core Web API (WebApp backend)
-│  ├─ Controllers/
-│  │   └─ AccountsController.cs
-│  └─ Program.cs
-├─ SimpleFinWebApp/           # Static folder for frontend
-│  └─ index.html
-└─ SimpleFinTelegram.sln
+SimpleFinTelegramBot/
+├── 📁 csharp/                    # C# (.NET 8) Implementation
+│   ├── SimpleFinBot/             # Console Bot Application
+│   ├── SimpleFinWebApi/          # ASP.NET Core API
+│   ├── SimpleFinWebApp/          # Static WebApp
+│   ├── .github/workflows/        # CI/CD Pipeline
+│   └── README.md                 # C# Documentation
+├── 📁 python/                    # Python Implementation
+│   ├── SimpleFinBot/             # Async Python Bot
+│   ├── SimpleFinWebApi/          # FastAPI Backend
+│   ├── SimpleFinWebApp/          # Enhanced WebApp
+│   └── README.md                 # Python Documentation
+├── README.md                     # This file
+├── DESCRIPTION.md                # Project overview
+└── GITHUB_DESCRIPTION.md         # Repository metadata
 ```
 
-## 🛠️ Setup Instructions
+## � Quick Start
 
-### Prerequisites
-- .NET 8 SDK
-- Telegram Bot Token (from @BotFather)
-
-### 1. Clone and Restore
+### For C# (.NET 8):
 ```bash
-git clone https://github.com/guberm/SimpleFinTelegramBot.git
-cd SimpleFinTelegramBot
+cd csharp
 dotnet restore
+# Configure bot token in appsettings.json or environment variables
+dotnet run --project SimpleFinWebApi  # Terminal 1
+dotnet run --project SimpleFinBot     # Terminal 2
 ```
 
-### 2. Configure Bot Token
-
-#### Method 1: Configuration Files (Development)
-1. Edit `SimpleFinBot/appsettings.Development.json`
-2. Replace the bot token:
-```json
-{
-  "TelegramBot": {
-    "BotToken": "YOUR_ACTUAL_BOT_TOKEN_HERE"
-  }
-}
-```
-
-#### Method 2: Environment Variables (Production)
+### For Python:
 ```bash
-# Windows PowerShell
-$env:TELEGRAMBOT__BOTTOKEN="your_bot_token_here"
-
-# Linux/macOS
-export TELEGRAMBOT__BOTTOKEN="your_bot_token_here"
+cd python/SimpleFinBot
+pip install -r requirements.txt
+# Configure bot token in config.json or environment variables
+cd ../SimpleFinWebApi && pip install -r requirements.txt
+python api.py          # Terminal 1
+cd ../SimpleFinBot && python bot.py  # Terminal 2
 ```
 
-### 3. Getting a Bot Token
-1. Open Telegram and search for `@BotFather`
-2. Start a conversation and send `/newbot`
-3. Follow the instructions to create your bot
-4. Copy the bot token provided by BotFather
+## 🔒 Security & Best Practices
 
-For detailed configuration instructions, see [BOT_CONFIGURATION.md](SimpleFinBot/BOT_CONFIGURATION.md).
+Both implementations include:
+- ✅ **Secure token management** with environment variable support
+- ✅ **Input validation** and sanitization
+- ✅ **Parameterized database queries** preventing SQL injection
+- ✅ **CORS configuration** for API security
+- ✅ **Error handling** with user-friendly messages
+- ✅ **Configuration validation** with startup checks
 
-## 🚀 Running the Application
+## 📚 Documentation
 
-### Option 1: Using VS Code Tasks
-1. Open in VS Code
-2. Use `Ctrl+Shift+P` → "Tasks: Run Task"
-3. Select "Run Web API" and "Run Telegram Bot"
+### Getting Started:
+- 🔷 [C# Setup Guide](./csharp/README.md) - Complete .NET 8 setup instructions
+- 🐍 [Python Setup Guide](./python/README.md) - Python installation and configuration
+- ⚙️ [C# Configuration](./csharp/SimpleFinBot/BOT_CONFIGURATION.md) - Advanced C# configuration
+- ⚙️ [Python Configuration](./python/PYTHON_CONFIGURATION.md) - Python configuration guide
 
-### Option 2: Manual Commands
+### Technical Details:
+- 📖 [Project Overview](./DESCRIPTION.md) - Architecture and design decisions
+- 🏷️ [Repository Info](./GITHUB_DESCRIPTION.md) - GitHub metadata and tags
 
-1. **Start the Web API:**
-   ```bash
-   dotnet run --project SimpleFinWebApi
-   ```
-   The API will be available at `http://localhost:5171`
+## 📋 Usage Workflow
 
-2. **Start the Telegram Bot (in a new terminal):**
-   ```bash
-   dotnet run --project SimpleFinBot
-   ```
+1. **Setup**: Choose your preferred implementation (C# or Python)
+2. **Configure**: Set up your Telegram bot token via @BotFather
+3. **Deploy**: Run both the API server and bot application
+4. **Connect**: Start a chat with your bot and use `/add` to connect banks
+5. **Access**: Use bot commands or the WebApp interface to view account data
 
-## 📋 Usage
+## 🧪 Development & Testing
 
-1. Start a chat with your Telegram bot
-2. Use `/add` to get SimpleFIN setup instructions
-3. Follow the SimpleFIN bridge link to generate a token
-4. Send the token to the bot to connect your bank
-5. Use `/accounts` to view your connected accounts
-6. Use `/web` to open the WebApp interface
+### C# Development:
+- **VS Code**: Complete development environment with tasks and debugging
+- **GitHub Actions**: Automated CI/CD pipeline for testing and building
+- **IntelliSense**: Full IDE support with compile-time error checking
 
-## 💾 Database
-
-The application uses SQLite with the following schema:
-
-```sql
-accounts (
-    user_id INTEGER,
-    access_url TEXT,
-    bank_name TEXT,
-    created_at TEXT,
-    PRIMARY KEY (user_id, access_url)
-)
-```
-
-Database file: `simplefin_multi_accounts.db` (shared between Bot and API)
-
-## 🔒 Security Features
-
-- ✅ Environment variable support for sensitive data
-- ✅ Token validation with helpful error messages  
-- ✅ Parameterized database queries
-- ✅ CORS configuration for API security
-- ✅ SimpleFIN credential encryption
-- ✅ Input validation and sanitization
-
-## 📦 Dependencies
-
-### SimpleFinBot
-- `Telegram.Bot` (v19.0.0) - Telegram Bot API
-- `Microsoft.Data.Sqlite` (v8.0.11) - Database access
-- `Microsoft.Extensions.Configuration.*` - Configuration management
-
-### SimpleFinWebApi
-- `Microsoft.Data.Sqlite` (v8.0.11) - Database access
-- `Microsoft.AspNetCore.OpenApi` (v8.0.11) - API documentation
-
-## 🧪 Development
-
-### Building
-```bash
-dotnet build
-```
-
-### Testing
-```bash
-dotnet test
-```
-
-### Clean Build
-```bash
-dotnet clean
-dotnet restore
-dotnet build
-```
+### Python Development:
+- **FastAPI Docs**: Automatic API documentation at `/docs`
+- **Type Hints**: Full type safety with runtime validation
+- **Hot Reload**: Development server with auto-restart on changes
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Ensure all tests pass
-5. Submit a pull request
+1. Choose your preferred implementation (C# or Python)
+2. Fork the repository
+3. Create a feature branch
+4. Follow the coding standards for your chosen language
+5. Submit a pull request with tests
 
 ## 📄 License
 
-This project is a template for SimpleFIN integration with Telegram bots.
+This project serves as a comprehensive template for SimpleFIN integration with Telegram bots in both C# and Python.
 
-## 📞 Support
+---
 
-- Check [BOT_CONFIGURATION.md](SimpleFinBot/BOT_CONFIGURATION.md) for setup issues
-- Review VS Code tasks for development workflow
-- Check GitHub Issues for known problems
+<div align="center">
+
+**🔷 Choose C# for enterprise applications with high performance requirements**  
+**🐍 Choose Python for rapid development and extensive ecosystem integration**
+
+Both implementations provide identical functionality with language-specific optimizations!
+
+</div>
