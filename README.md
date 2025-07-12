@@ -1,6 +1,13 @@
 # SimpleFIN Telegram Bot
 
-A complete Telegram Bot + Web API solution for managing SimpleFIN financial accounts integration, built with C# and SQLite.
+> 🏦 **Complete Financial Integration Solution** - A full-stack C# ecosystem combining Telegram Bot, Web API, and WebApp for seamless banking data access through SimpleFIN integration.
+
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
+[![.NET](https://img.shields.io/badge/.NET-9.0-512BD4)]()
+[![License](https://img.shields.io/badge/license-MIT-blue)]()
+[![Telegram](https://img.shields.io/badge/Telegram-Bot%20API-26A5E4)]()
+
+A comprehensive Telegram Bot + Web API solution for managing SimpleFIN financial accounts integration, built with C# and SQLite. This project enables users to securely connect their bank accounts and access financial information through both conversational bot commands and a modern web interface.
 
 ## Project Structure
 
