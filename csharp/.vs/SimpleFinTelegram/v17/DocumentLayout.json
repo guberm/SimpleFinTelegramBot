@@ -1,0 +1,152 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E4D807FB-AD05-414C-A772-EFF4E92C0C29}|SimpleFinBot\\SimpleFinBot.csproj|c:\\github\\simplefintelegrambot\\csharp\\simplefinbot\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E4D807FB-AD05-414C-A772-EFF4E92C0C29}|SimpleFinBot\\SimpleFinBot.csproj|solutionrelative:simplefinbot\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4D807FB-AD05-414C-A772-EFF4E92C0C29}|SimpleFinBot\\SimpleFinBot.csproj|c:\\github\\simplefintelegrambot\\csharp\\simplefinbot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E4D807FB-AD05-414C-A772-EFF4E92C0C29}|SimpleFinBot\\SimpleFinBot.csproj|solutionrelative:simplefinbot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4D807FB-AD05-414C-A772-EFF4E92C0C29}|SimpleFinBot\\SimpleFinBot.csproj|c:\\github\\simplefintelegrambot\\csharp\\simplefinbot\\bot_configuration.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{E4D807FB-AD05-414C-A772-EFF4E92C0C29}|SimpleFinBot\\SimpleFinBot.csproj|solutionrelative:simplefinbot\\bot_configuration.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4D807FB-AD05-414C-A772-EFF4E92C0C29}|SimpleFinBot\\SimpleFinBot.csproj|c:\\github\\simplefintelegrambot\\csharp\\simplefinbot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E4D807FB-AD05-414C-A772-EFF4E92C0C29}|SimpleFinBot\\SimpleFinBot.csproj|solutionrelative:simplefinbot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 16,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:144:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:145:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:149:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:151:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:146:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:142:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:143:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:140:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:141:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:139:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:138:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:147:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:148:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:150:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinBot\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "SimpleFinBot\\appsettings.Development.json",
+              "ToolTip": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinBot\\appsettings.Development.json",
+              "RelativeToolTip": "SimpleFinBot\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-13T16:55:58.347Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BOT_CONFIGURATION.md",
+              "DocumentMoniker": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinBot\\BOT_CONFIGURATION.md",
+              "RelativeDocumentMoniker": "SimpleFinBot\\BOT_CONFIGURATION.md",
+              "ToolTip": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinBot\\BOT_CONFIGURATION.md",
+              "RelativeToolTip": "SimpleFinBot\\BOT_CONFIGURATION.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-07-13T16:55:54.582Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinBot\\appsettings.json",
+              "RelativeDocumentMoniker": "SimpleFinBot\\appsettings.json",
+              "ToolTip": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinBot\\appsettings.json",
+              "RelativeToolTip": "SimpleFinBot\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-13T16:50:31.928Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinBot\\Program.cs",
+              "RelativeDocumentMoniker": "SimpleFinBot\\Program.cs",
+              "ToolTip": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinBot\\Program.cs",
+              "RelativeToolTip": "SimpleFinBot\\Program.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAUwC8BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-13T16:50:15.228Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

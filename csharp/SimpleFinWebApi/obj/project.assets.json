@@ -392,11 +392,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\GitHub\\SimpleFinTelegramBot\\SimpleFinWebApi\\SimpleFinWebApi.csproj",
+      "projectUniqueName": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinWebApi\\SimpleFinWebApi.csproj",
       "projectName": "SimpleFinWebApi",
-      "projectPath": "C:\\GitHub\\SimpleFinTelegramBot\\SimpleFinWebApi\\SimpleFinWebApi.csproj",
+      "projectPath": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinWebApi\\SimpleFinWebApi.csproj",
       "packagesPath": "C:\\Users\\michael.guber\\.nuget\\packages\\",
-      "outputPath": "C:\\GitHub\\SimpleFinTelegramBot\\SimpleFinWebApi\\obj\\",
+      "outputPath": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinWebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cOBAbTOXuZ8=",
+  "dgSpecHash": "vXJVrCwJeiQ=",
   "success": true,
-  "projectFilePath": "C:\\GitHub\\SimpleFinTelegramBot\\SimpleFinWebApi\\SimpleFinWebApi.csproj",
+  "projectFilePath": "C:\\GitHub\\SimpleFinTelegramBot\\csharp\\SimpleFinWebApi\\SimpleFinWebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\michael.guber\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.11\\microsoft.aspnetcore.openapi.8.0.11.nupkg.sha512",
     "C:\\Users\\michael.guber\\.nuget\\packages\\microsoft.data.sqlite\\8.0.11\\microsoft.data.sqlite.8.0.11.nupkg.sha512",
